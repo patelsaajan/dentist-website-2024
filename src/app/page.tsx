@@ -1,7 +1,8 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Image from "next/image";
+"use client";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 
 export default function Home() {
+  const theme = useTheme();
   return (
     <Stack direction={"column"} spacing={1} sx={{ m: 10 }}>
       <Typography color={"#FDC435"}>Foundation Dentist</Typography>
@@ -10,9 +11,13 @@ export default function Home() {
         Short text with details about you, what you do or your professional
         career. You can add more information on the about page.
       </Typography>
-      <Stack direction={"row"}>
-        <Button>Projects</Button>
-        <Button>LinkedIn</Button>
+      <Stack direction={"row"} spacing={2}>
+        <Button sx={{ backgroundColor: "secondary.main", px: 3 }}>
+          Projects
+        </Button>
+        <Button sx={{ color: "black", border: "2px solid black", px: 3 }}>
+          LinkedIn
+        </Button>
       </Stack>
     </Stack>
   );
