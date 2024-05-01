@@ -1,3 +1,4 @@
+import WebsiteNav from "@/nav-bar/website-nav-bar";
 import DentistThemeProvider from "@/theme";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <DentistThemeProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className} suppressHydrationWarning={true}>
+          <WebsiteNav />
+          {children}
+        </body>
       </html>
     </DentistThemeProvider>
   );
