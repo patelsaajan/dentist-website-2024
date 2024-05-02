@@ -8,8 +8,13 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 
-const navItems = ["Home", "About", "Contact"];
+const navItems = [
+  { name: "Case Studies", route: "/case-studies" },
+  { name: "About", route: "/about" },
+  { name: "Contact", route: "contact" },
+];
 
 const WebsiteNav = () => {
   const theme = useTheme();
@@ -23,18 +28,44 @@ const WebsiteNav = () => {
         }}
       >
         <Toolbar>
-          <Stack direction={"row"}>
-            <Typography>Deesha Chudsama</Typography>
+          <Stack
+            direction={"row"}
+            width={"100%"}
+            sx={{ justifyContent: "space-between" }}
+          >
+            <Link href={"/"}>
+              <Typography
+                sx={{
+                  color: "black",
+                  "&:hover": {
+                    textDecoration: "underline 2px",
+                    textUnderlineOffset: 5,
+                  },
+                }}
+              >
+                Deesha Chudsama
+              </Typography>
+            </Link>
             <Stack
               direction={"row"}
               spacing={6}
-              width="100%"
               sx={{ justifyContent: "flex-end" }}
             >
               {navItems.map((navItem) => (
-                <Typography id={navItem} sx={{ color: "black" }}>
-                  {navItem}
-                </Typography>
+                <Link href={navItem.route}>
+                  <Typography
+                    id={navItem.name}
+                    sx={{
+                      color: "black",
+                      "&:hover": {
+                        textDecoration: "underline 2px",
+                        textUnderlineOffset: 5,
+                      },
+                    }}
+                  >
+                    {navItem.name}
+                  </Typography>
+                </Link>
               ))}
             </Stack>
           </Stack>

@@ -2,6 +2,7 @@ import WebsiteNav from "@/nav-bar/website-nav-bar";
 import DentistThemeProvider from "@/theme";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
