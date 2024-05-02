@@ -5,7 +5,8 @@ a {
 img {
   border-radius: 16px;
 }
-input,
-textarea {
-  font-family: Noto Serif;
+
+body,
+html {
+  background-color: #f7f7f7;
 }
