@@ -13,7 +13,7 @@ import Link from "next/link";
 const navItems = [
   { name: "Case Studies", route: "/case-studies" },
   { name: "About", route: "/about" },
-  { name: "Contact", route: "contact" },
+  { name: "Contact", route: "/contact" },
 ];
 
 const WebsiteNav = () => {
@@ -24,7 +24,7 @@ const WebsiteNav = () => {
         position="static"
         elevation={0}
         sx={{
-          backgroundColor: "white",
+          backgroundColor: "transparent",
           width: "100%",
         }}
       >
