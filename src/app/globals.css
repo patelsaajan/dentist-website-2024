@@ -5,3 +5,7 @@ a {
 img {
   border-radius: 16px;
 }
+input,
+textarea {
+  font-family: Noto Serif;
+}

@@ -44,7 +44,7 @@ const WebsiteNav = () => {
                   },
                 }}
               >
-                Deesha Chudsama
+                Deesha Chudasama
               </Typography>
             </Link>
             <Stack
@@ -53,9 +53,8 @@ const WebsiteNav = () => {
               sx={{ justifyContent: "flex-end" }}
             >
               {navItems.map((navItem) => (
-                <Link href={navItem.route}>
+                <Link href={navItem.route} key={navItem.name}>
                   <Typography
-                    id={navItem.name}
                     sx={{
                       color: "black",
                       "&:hover": {

@@ -1,14 +1,24 @@
 "use client";
-import { Button, Container, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Container,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { Noto_Serif } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Container maxWidth={"lg"} disableGutters sx={{ mt: 5 }}>
       <Stack
-        direction={"row"}
+        direction={isMobile ? "column" : "row"}
+        spacing={8}
         sx={{
           width: "100%",
           justifyContent: "space-between",
@@ -16,27 +26,47 @@ export default function Home() {
           mt: 10,
         }}
       >
-        <Stack direction={"column"} spacing={2} sx={{ maxWidth: "45%" }}>
+        <Stack
+          direction={"column"}
+          spacing={2}
+          sx={{
+            maxWidth: "60%",
+            textAlign: isMobile ? "center" : "left",
+            justifyContent: "center",
+          }}
+        >
           <Typography variant="h6" color={"primary.main"}>
             Foundation Dentist
           </Typography>
-          <Typography variant="h2" textAlign={"left"}>
+          <Typography
+            variant="h2"
+            sx={{ fontFamily: "Noto_Serif ", fontWeight: 700 }}
+          >
             Hello, my name is Deesha Chudasama
           </Typography>
-          <Typography variant="h6" color={"#828282"} textAlign={"justify"}>
+          <Typography
+            variant="h6"
+            color={"#828282"}
+            textAlign={isMobile ? "center" : "justify"}
+          >
             Short text with details about you, what you do or your professional
             career. You can add more information on the about page.
           </Typography>
-          <Stack direction={"row"} spacing={2}>
+          <Stack
+            direction={"row"}
+            spacing={2}
+            justifyContent={isMobile ? "center" : "flex-start"}
+          >
             <Link href={"/case-studies"}>
               <Button
                 variant="contained"
                 sx={{
                   px: 3,
                   transition: "all 200ms ease-in",
+                  border: `2px solid ${theme.palette.primary.main}`,
                   "&:hover": {
-                    backgroundColor: "black",
-                    color: "primary.main",
+                    backgroundColor: `${theme.palette.primary.light}`,
+                    color: "black",
                   },
                 }}
               >
@@ -82,7 +112,7 @@ export default function Home() {
             "&::after": {
               content: '""',
               position: "absolute",
-              width: "10%",
+              width: isMobile ? "12%" : "10%",
               left: "50%",
               transform: "translate(-50%)",
               bottom: 0,
@@ -92,6 +122,11 @@ export default function Home() {
           }}
         >
           Case Studies
+        </Typography>
+
+        <Typography variant="h6" sx={{ mt: 6, textAlign: "center" }}>
+          {" "}
+          Coming Soon
         </Typography>
       </Stack>
     </Container>
