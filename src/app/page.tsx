@@ -125,7 +125,6 @@ export default function Home() {
         </Typography>
 
         <Typography variant="h6" sx={{ mt: 6, textAlign: "center" }}>
-          {" "}
           Coming Soon
         </Typography>
       </Stack>
