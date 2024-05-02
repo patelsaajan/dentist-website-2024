@@ -19,15 +19,16 @@ const navItems = [
 const WebsiteNav = () => {
   const theme = useTheme();
   return (
-    <Container maxWidth={"lg"} sx={{ flexGrow: 1 }}>
+    <Container maxWidth={"lg"} disableGutters sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
+        elevation={0}
         sx={{
-          boxShadow: "0",
           backgroundColor: "white",
+          width: "100%",
         }}
       >
-        <Toolbar>
+        <Toolbar disableGutters>
           <Stack
             direction={"row"}
             width={"100%"}
