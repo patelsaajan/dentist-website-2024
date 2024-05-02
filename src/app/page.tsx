@@ -39,7 +39,7 @@ export default function Home() {
             Foundation Dentist
           </Typography>
           <Typography
-            variant="h2"
+            variant={isMobile ? "h3" : "h2"}
             sx={{ fontFamily: "Noto_Serif ", fontWeight: 700 }}
           >
             Hello, my name is Deesha Chudasama
@@ -92,8 +92,8 @@ export default function Home() {
         <Image
           src={"/imgs/hero.png"}
           alt={"hero image of Deesha"}
-          width={500}
-          height={500}
+          width={isMobile ? 400 : 500}
+          height={isMobile ? 400 : 500}
           style={{
             borderRadius: "50%",
             border: `10px solid ${theme.palette.primary.main}`,
