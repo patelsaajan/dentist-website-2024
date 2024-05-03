@@ -1,6 +1,7 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, getServerSession } from "next-auth";
 import { CredentialsProvider } from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 export const authConfig: NextAuthOptions = {
   providers: [
@@ -10,3 +11,8 @@ export const authConfig: NextAuthOptions = {
     }),
   ],
 };
+
+export async function logInIsRequiredServer() {
+  const session = await getServerSession(authConfig);
+  if (!session) return redirect("/");
+}

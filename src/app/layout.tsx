@@ -3,6 +3,8 @@ import DentistThemeProvider from "@/theme";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import NextAuthProvider from "@/components/next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <DentistThemeProvider>
-      <html lang="en">
-        <body className={inter.className} suppressHydrationWarning={true}>
-          <WebsiteNav />
-          {children}
-        </body>
-      </html>
+      <NextAuthProvider>
+        <html lang="en">
+          <body className={inter.className} suppressHydrationWarning={true}>
+            <WebsiteNav />
+            {children}
+          </body>
+        </html>
+      </NextAuthProvider>
     </DentistThemeProvider>
   );
 }

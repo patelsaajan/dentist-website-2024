@@ -1,10 +1,16 @@
 "use client";
-import { GoogleSignInButton } from "@/components/authButtons";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button, Container, Stack, Typography } from "@mui/material";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function LogInPage() {
+export default function LogIn() {
+  const { data: session } = useSession();
+
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
     <Container
       maxWidth={"md"}
@@ -27,6 +33,17 @@ export default function LogInPage() {
           }}
         >
           Hello There
+        </Typography>
+
+        <Typography
+          variant={"h4"}
+          sx={{
+            fontFamily: "Noto_Serif",
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
+          Should you be here?
         </Typography>
 
         <Button
