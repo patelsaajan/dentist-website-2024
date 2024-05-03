@@ -1,27 +1,48 @@
+"use client";
+import { GoogleSignInButton } from "@/components/authButtons";
+import GoogleIcon from "@mui/icons-material/Google";
 import { Button, Container, Stack, Typography } from "@mui/material";
-import Link from "next/link";
-import React from "react";
+import { signIn } from "next-auth/react";
 
-const page = () => {
+export default function LogInPage() {
   return (
-    <Container maxWidth={"md"} sx={{ textAlign: "center", mt: 10 }}>
-      <Stack spacing={8}>
+    <Container
+      maxWidth={"md"}
+      sx={{
+        mt: 10,
+      }}
+    >
+      <Stack
+        spacing={8}
+        sx={{
+          alignItems: "center",
+        }}
+      >
         <Typography
           variant={"h2"}
           sx={{
-            fontFamily: "Noto_Serif ",
+            fontFamily: "Noto_Serif",
             fontWeight: 700,
             textAlign: "center",
           }}
         >
           Hello There
         </Typography>
-        <Link href={"/api/auth/signin"}>
-          <Button variant="contained">Log In</Button>
-        </Link>
+
+        <Button
+          size="large"
+          variant="outlined"
+          startIcon={<GoogleIcon />}
+          onClick={() => signIn("google")}
+          sx={{
+            width: "50%",
+            color: "black",
+            borderColor: "grey.400",
+          }}
+        >
+          Google
+        </Button>
       </Stack>
     </Container>
   );
-};
-
-export default page;
+}
