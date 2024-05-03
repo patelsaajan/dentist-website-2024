@@ -12,6 +12,7 @@ import Link from "next/link";
 
 const navItems = [
   { name: "Case Studies", route: "/case-studies" },
+  { name: "Portfolio", route: "/portfolio" },
   { name: "About", route: "/about" },
   { name: "Contact", route: "/contact" },
 ];
