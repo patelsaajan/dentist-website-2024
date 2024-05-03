@@ -1,18 +1,16 @@
 "use client";
 import { Container, LinearProgress, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
-// @ts-ignore
+
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { createCaseStudy, fileStorage } from "lib/firebase/utils";
 
 const AddOrEditCaseStudy = dynamic(
   () => import("components/case-study/addOrEditCaseStudy"),
-  {
-    ssr: false,
-    loading: () => <LinearProgress />,
-  }
+  { ssr: false, loading: () => <LinearProgress /> }
 );
+
 const removeEmojis = (text: string) =>
   text.replace(
     /[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|/g,
@@ -46,12 +44,10 @@ const AddCaseStudy = () => {
     });
   };
 
-  if (!session) {
-    return <LinearProgress color="secondary" />;
-  }
+  if (!session) return <LinearProgress color="secondary" />;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
+    <Container maxWidth="md" sx={{ mt: 8, textAlign: "center" }}>
       <Typography variant="h4">New Case Study</Typography>
       <AddOrEditCaseStudy onSubmitCaseStudy={onSubmit} />
     </Container>

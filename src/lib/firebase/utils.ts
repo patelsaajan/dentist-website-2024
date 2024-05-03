@@ -1,5 +1,4 @@
 import { ref as storageRef, uploadBytes } from "firebase/storage";
-// @ts-ignore
 import { v4 as uuid } from "uuid";
 import { storage, db } from "./config";
 import { doc, setDoc } from "firebase/firestore";

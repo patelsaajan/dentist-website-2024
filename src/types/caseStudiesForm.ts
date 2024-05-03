@@ -3,5 +3,5 @@ type ICaseStudyForm = {
   abstract: string;
   // cardPhoto: File | null;
   content: string;
-  slug: "string";
+  slug: string;
 };

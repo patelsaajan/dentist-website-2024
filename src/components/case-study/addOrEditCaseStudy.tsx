@@ -74,7 +74,7 @@ const AddOrEditCaseStudy = ({
       })}
     >
       <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
-        <Stack direction={"column"} spacing={2} pt={5}>
+        <Stack direction={"column"} spacing={2}>
           <Controller
             name="title"
             control={control}
