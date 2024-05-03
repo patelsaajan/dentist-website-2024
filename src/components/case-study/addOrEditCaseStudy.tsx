@@ -41,7 +41,7 @@ const AddOrEditCaseStudy = ({
     title: "",
     abstract: "",
     content: "",
-    // cardPhoto: null,
+    cardPhoto: null,
   };
 
   const { control, handleSubmit, reset, setValue, watch, getValues } =
@@ -49,18 +49,18 @@ const AddOrEditCaseStudy = ({
       defaultValues: defaultValues || dv2,
     });
 
-  // const blogHeroPhoto = watch("cardPhoto");
+  const cardPhoto = watch("cardPhoto");
 
-  // const handleClearChange = () => {
-  //   setValue("cardPhoto", null);
-  // };
+  const handleClearChange = () => {
+    setValue("cardPhoto", null);
+  };
 
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { files } = event.target;
-  //   if (files && files.length > 0) {
-  //     setValue("cardPhoto", files[0]);
-  //   }
-  // };
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files.length > 0) {
+      setValue("cardPhoto", files[0]);
+    }
+  };
 
   const onSubmit = (data: ICaseStudyForm) => {
     onSubmitCaseStudy(data);
@@ -94,10 +94,10 @@ const AddOrEditCaseStudy = ({
             )}
           />
 
-          {/* {blogHeroPhoto ? (
+          {cardPhoto ? (
             <AddingCardImage
               handleClearChange={handleClearChange}
-              photoFile={blogHeroPhoto as File}
+              photoFile={cardPhoto as File}
             />
           ) : (
             <Controller
@@ -114,7 +114,7 @@ const AddOrEditCaseStudy = ({
                 />
               )}
             />
-          )} */}
+          )}
 
           <Controller
             name="abstract"

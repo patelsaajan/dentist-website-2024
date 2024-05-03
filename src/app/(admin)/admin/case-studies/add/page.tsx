@@ -28,20 +28,17 @@ const AddCaseStudy = () => {
       return;
     }
 
-    const { title, ...payload } = data;
+    const { cardPhoto, title, ...payload } = data;
 
     const slug = _.kebabCase(sanitiseSlug(title));
-    // fileStorage(
-    //   cardPhoto as File,
-    //   `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=caseStudies/${slug}`
-    // );
-
-    createCaseStudy(slug, {
-      ...payload,
-      title,
-      // cardPhoto: cardPhoto,
-      slug,
-    });
+    fileStorage(cardPhoto as File, `caseStudies/${slug}`).then((cardPhoto) =>
+      createCaseStudy(slug, {
+        ...payload,
+        title,
+        cardPhoto: cardPhoto,
+        slug,
+      })
+    );
   };
 
   if (!session) return <LinearProgress color="secondary" />;
