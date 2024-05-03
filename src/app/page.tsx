@@ -73,7 +73,7 @@ export default function Home() {
                 Case Studies
               </Button>
             </Link>
-            <Link href={"/portfolio"}>
+            <Link href={"/login"}>
               <Button
                 sx={{
                   color: "black",
