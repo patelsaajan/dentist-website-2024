@@ -1,29 +1,22 @@
 "use client";
-import {
-  Container,
-  LinearProgress,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Container, LinearProgress, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+
+const AddOrEditCaseStudy = dynamic(
+  () => import("components/case-study/addOrEditCaseStudy"),
+  {
+    ssr: false,
+    loading: () => <LinearProgress />,
+  }
+);
 
 const AddCaseStudy = () => {
   const { data: session } = useSession();
 
-  const dv2 = {
-    title: "",
-    summary: "",
-    tag: "",
-    content: "",
-    heroPhoto: null,
+  const onSubmit = () => {
+    console.log("submit");
   };
-
-  const { control, handleSubmit, reset, setValue, watch, getValues } =
-    useForm<caseStudyForm>({
-      defaultValues: dv2,
-    });
 
   if (!session) {
     return <LinearProgress color="secondary" />;
@@ -32,12 +25,7 @@ const AddCaseStudy = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
       <Typography variant="h4">New Case Study</Typography>
-      <Stack spacing={3} sx={{ mt: 4 }}>
-        <TextField label={"Title"} size="small" />
-        <TextField label={"Abstract"} size="small" />
-        <TextField type="file" size="small" />
-        <TextField label={"React Quill"} size="small" multiline minRows={5} />
-      </Stack>
+      <AddOrEditCaseStudy onSubmitCaseStudy={onSubmit} />
     </Container>
   );
 };

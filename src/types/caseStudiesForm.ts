@@ -1,6 +1,6 @@
-type caseStudyForm = {
+type IStudyForm = {
   title: string;
   abstract: string;
-  cardPhoto: File;
+  cardPhoto: File | null;
   content: string;
 };
