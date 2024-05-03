@@ -8,7 +8,7 @@ export default function LogIn() {
   const { data: session } = useSession();
 
   if (session) {
-    redirect("/dashboard");
+    redirect("/admin/home");
   }
 
   return (
