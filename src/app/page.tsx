@@ -73,20 +73,22 @@ export default function Home() {
                 Case Studies
               </Button>
             </Link>
-            <Button
-              sx={{
-                color: "black",
-                border: "2px solid black",
-                px: 3,
-                transition: "all 200ms ease-in",
-                "&:hover": {
-                  backgroundColor: "black",
-                  color: "white",
-                },
-              }}
-            >
-              LinkedIn
-            </Button>
+            <Link href={"/portfolio"}>
+              <Button
+                sx={{
+                  color: "black",
+                  border: "2px solid black",
+                  px: 3,
+                  transition: "all 200ms ease-in",
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white",
+                  },
+                }}
+              >
+                Portfolio
+              </Button>
+            </Link>
           </Stack>
         </Stack>
         <Image
