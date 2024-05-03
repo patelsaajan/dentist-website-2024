@@ -1,10 +1,9 @@
-import WebsiteNav from "nav-bar/website-nav-bar";
-import DentistThemeProvider from "theme";
+import SnackbarContext from "components/context/snackbar";
+import NextAuthProvider from "components/next-auth";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import DentistThemeProvider from "theme";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import NextAuthProvider from "components/next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +22,7 @@ export default function RootLayout({
       <NextAuthProvider>
         <html lang="en">
           <body className={inter.className} suppressHydrationWarning={true}>
-            <WebsiteNav />
-            {children}
+            <SnackbarContext>{children}</SnackbarContext>
           </body>
         </html>
       </NextAuthProvider>

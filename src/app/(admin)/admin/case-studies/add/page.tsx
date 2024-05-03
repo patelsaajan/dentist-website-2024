@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { createCaseStudy, fileStorage } from "lib/firebase/utils";
+import { useSnackbar } from "notistack";
 
 const AddOrEditCaseStudy = dynamic(
   () => import("components/case-study/addOrEditCaseStudy"),
@@ -22,9 +23,11 @@ const sanitiseSlug = (text: string) =>
 
 const AddCaseStudy = () => {
   const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = (data: ICaseStudyForm): void => {
-    if (!session?.user?.name) {
+    if (!session?.user?.name || !data.cardPhoto) {
+      enqueueSnackbar("Invalid data, please try again.", { variant: "error" });
       return;
     }
 
@@ -38,6 +41,12 @@ const AddCaseStudy = () => {
         cardPhoto: cardPhoto,
         slug,
       })
+        .then(() => enqueueSnackbar(" case study has been added"))
+        .catch((e) =>
+          enqueueSnackbar(`Error adding the case study: ${e.message}`, {
+            variant: "error",
+          })
+        )
     );
   };
 
