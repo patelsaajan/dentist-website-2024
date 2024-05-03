@@ -1,51 +1,27 @@
-"use client";
-import {
-  Button,
-  Container,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 import React from "react";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-} from "firebase/auth";
-import { auth } from "../../../firebase/firebaseConfig";
 
-const Admin = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const handleGoogle = async (e: React.MouseEvent) => {
-    const provider = await new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
+const page = () => {
   return (
-    <Container
-      maxWidth={"lg"}
-      sx={{
-        mt: 8,
-
-        textAlign: "center",
-      }}
-    >
-      <Typography
-        variant={isMobile ? "h3" : "h2"}
-        sx={{
-          fontFamily: "Noto_Serif ",
-          fontWeight: 700,
-          textAlign: "center",
-        }}
-      >
-        Hello there
-      </Typography>
-      <Button onClick={handleGoogle} sx={{ m: "auto", mt: 6 }}>
-        Click Me
-      </Button>
+    <Container maxWidth={"md"} sx={{ textAlign: "center", mt: 10 }}>
+      <Stack spacing={8}>
+        <Typography
+          variant={"h2"}
+          sx={{
+            fontFamily: "Noto_Serif ",
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
+          Hello There
+        </Typography>
+        <Link href={"/api/auth/signin"}>
+          <Button variant="contained">Log In</Button>
+        </Link>
+      </Stack>
     </Container>
   );
 };
 
-export default Admin;
+export default page;
