@@ -1,4 +1,4 @@
-import { Container, Stack, TextField, Box } from "@mui/material";
+import { Container, Stack, TextField, Box, Button } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -29,8 +29,8 @@ const modules = {
 };
 
 type addCaseStudyProps = {
-  onSubmitCaseStudy: (data: IStudyForm) => void;
-  defaultValues?: IStudyForm;
+  onSubmitCaseStudy: (data: ICaseStudyForm) => void;
+  defaultValues?: ICaseStudyForm;
 };
 
 const AddOrEditCaseStudy = ({
@@ -39,118 +39,124 @@ const AddOrEditCaseStudy = ({
 }: addCaseStudyProps) => {
   const dv2 = {
     title: "",
-    summary: "",
-    tag: "",
+    abstract: "",
     content: "",
-    cardPhoto: null,
+    // cardPhoto: null,
   };
 
   const { control, handleSubmit, reset, setValue, watch, getValues } =
-    useForm<IStudyForm>({
+    useForm<ICaseStudyForm>({
       defaultValues: defaultValues || dv2,
     });
 
-  const blogHeroPhoto = watch("cardPhoto");
+  // const blogHeroPhoto = watch("cardPhoto");
 
-  const handleClearChange = () => {
-    setValue("cardPhoto", null);
-  };
+  // const handleClearChange = () => {
+  //   setValue("cardPhoto", null);
+  // };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    if (files && files.length > 0) {
-      setValue("cardPhoto", files[0]);
-    }
-  };
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { files } = event.target;
+  //   if (files && files.length > 0) {
+  //     setValue("cardPhoto", files[0]);
+  //   }
+  // };
 
-  const onSubmit = (data: IStudyForm) => {
+  const onSubmit = (data: ICaseStudyForm) => {
     onSubmitCaseStudy(data);
     reset();
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
-      <Stack direction={"column"} spacing={2} pt={5}>
-        <Controller
-          name="title"
-          control={control}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-          }: any) => (
-            <TextField
-              onChange={onChange}
-              value={value}
-              label={"Title"}
-              error={!!error}
-              helperText={!!error && "A title is required"}
-              size="small"
-            />
-          )}
-        />
-
-        {blogHeroPhoto ? (
-          <AddingCardImage
-            handleClearChange={handleClearChange}
-            photoFile={blogHeroPhoto as File}
-          />
-        ) : (
+    <form
+      onSubmit={handleSubmit((data: any) => {
+        onSubmit(data);
+      })}
+    >
+      <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
+        <Stack direction={"column"} spacing={2} pt={5}>
           <Controller
-            name="heroPhoto"
+            name="title"
             control={control}
             rules={{ required: true }}
-            render={({ field: { value }, fieldState: { error } }: any) => (
-              <TextField
-                type="file"
-                error={!!error}
-                helperText={!!error && "A hero image is required"}
-                size="small"
-                onChange={handleImageChange}
-              />
-            )}
-          />
-        )}
-
-        <Controller
-          name="abstract"
-          control={control}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-          }: any) => (
-            <TextField
-              label={"Summary"}
-              onChange={onChange}
-              multiline
-              error={!!error}
-              helperText={!!error && "An abstract is required"}
-              value={value}
-              size="small"
-            />
-          )}
-        />
-
-        <Box>
-          <Controller
-            name="content"
-            control={control}
             render={({
               field: { onChange, value },
               fieldState: { error },
             }: any) => (
-              <ReactQuill
-                theme="snow"
-                value={value}
+              <TextField
                 onChange={onChange}
-                modules={modules}
+                value={value}
+                label={"Title"}
+                error={!!error}
+                helperText={!!error && "A title is required"}
+                size="small"
               />
             )}
           />
-        </Box>
-      </Stack>
-    </Container>
+
+          {/* {blogHeroPhoto ? (
+            <AddingCardImage
+              handleClearChange={handleClearChange}
+              photoFile={blogHeroPhoto as File}
+            />
+          ) : (
+            <Controller
+              name="cardPhoto"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value }, fieldState: { error } }: any) => (
+                <TextField
+                  type="file"
+                  error={!!error}
+                  helperText={!!error && "A hero image is required"}
+                  size="small"
+                  onChange={handleImageChange}
+                />
+              )}
+            />
+          )} */}
+
+          <Controller
+            name="abstract"
+            control={control}
+            rules={{ required: true }}
+            render={({
+              field: { onChange, value },
+              fieldState: { error },
+            }: any) => (
+              <TextField
+                label={"Abstract"}
+                onChange={onChange}
+                multiline
+                error={!!error}
+                helperText={!!error && "An abstract is required"}
+                value={value}
+                size="small"
+              />
+            )}
+          />
+
+          <Box>
+            <Controller
+              name="content"
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <ReactQuill
+                  theme="snow"
+                  value={value}
+                  onChange={onChange}
+                  modules={modules}
+                />
+              )}
+            />
+          </Box>
+          <Button type={"submit"}>Submit</Button>
+        </Stack>
+      </Container>
+    </form>
   );
 };
 
