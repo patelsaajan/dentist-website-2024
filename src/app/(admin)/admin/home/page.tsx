@@ -29,7 +29,7 @@ const AdminHome = () => {
 
           <Typography variant="h5">Case Study</Typography>
           <Stack direction={"row"} spacing={3}>
-            <Link href={"/admin/case-studies/add"}>
+            <Link href={"/admin/case-studies/all"}>
               <Button
                 variant="contained"
                 sx={{
@@ -67,7 +67,7 @@ const AdminHome = () => {
           </Stack>
           <Typography variant="h5">Portfolio</Typography>
           <Stack direction={"row"} spacing={3}>
-            <Link href={"/admin/portfolio/add"}>
+            <Link href={"/admin/portfolio/all"}>
               <Button
                 variant="contained"
                 sx={{

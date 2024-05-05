@@ -1,4 +1,4 @@
-import LandingPageButton from "components/Buttons/LandingPageButton";
+import LandingPageButton from "components/buttons/LandingPageButton";
 
 export default async function PrimaryLayout({
   children,
