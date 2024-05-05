@@ -1,4 +1,4 @@
-import AdminHomeButton from "components/Buttons/AdminHomeButton";
+import AdminHomeButton from "components/buttons/AdminHomeButton";
 
 export default async function PrimaryLayout({
   children,

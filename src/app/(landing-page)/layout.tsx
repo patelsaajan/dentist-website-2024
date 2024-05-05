@@ -8,14 +8,7 @@ export default async function PrimaryLayout({
   return (
     <>
       <WebsiteNav />
-      <main
-        style={{
-          display: "flex",
-          flex: 1,
-        }}
-      >
-        {children}
-      </main>
+      <main style={{ display: "flex", flex: 1 }}>{children}</main>
     </>
   );
 }
