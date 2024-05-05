@@ -1,11 +1,23 @@
 "use client";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Add, AddBox, DeleteOutline, Edit } from "@mui/icons-material";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Container,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { getCaseStudies } from "api/caseStudies";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const AllCaseStudies = () => {
-  const [caseStudies, setCaseStudies] = useState<ICaseStudyForm[]>([]);
+  const [caseStudies, setCaseStudies] = useState<ICaseStudyForm[] | null>(null);
   useEffect(() => {
     // add event listener on firestore collection
     const unsubscribe = getCaseStudies(setCaseStudies);
@@ -13,6 +25,8 @@ const AllCaseStudies = () => {
     // remove event listener on unmount
     return () => unsubscribe();
   }, []);
+
+  if (!caseStudies) return <LinearProgress />;
 
   return (
     <Container maxWidth={"lg"}>
@@ -25,24 +39,42 @@ const AllCaseStudies = () => {
           textAlign: "center",
         }}
       >
-        <Typography variant="h4">Edit Case Studies</Typography>
+        <Stack direction={"row"} justifyContent={"space-between"}>
+          <Typography variant="h4">Case Studies</Typography>
+          <Link href={"/admin/case-studies/add"}>
+            <Button startIcon={<AddBox />} variant="outlined" color="success">
+              Add
+            </Button>
+          </Link>
+        </Stack>
         {caseStudies.map((caseStudy) => (
-          <Stack
-            direction={"row"}
-            spacing={4}
-            sx={{
-              width: "100%",
-              justifyContent: "space-evenly",
-              border: "1px solid black",
-              borderRadius: 16,
-            }}
-          >
-            <Typography>{caseStudy.title}</Typography>
-            <Stack direction={"row"} spacing={4}>
-              <Button>Edit</Button>
-              <Button>Delete</Button>
-            </Stack>
-          </Stack>
+          <Card>
+            <CardContent>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                sx={{ p: 2, alignItems: "center" }}
+              >
+                <Typography variant="h6">{caseStudy.title}</Typography>
+                <Typography variant="body1">
+                  {new Date(caseStudy.created || "").toDateString()}
+                </Typography>
+              </Stack>
+              <Typography variant="body2">{caseStudy.abstract}</Typography>
+            </CardContent>
+            <CardActions sx={{ justifyContent: "flex-end" }}>
+              <Button startIcon={<Edit />} variant="outlined">
+                Edit
+              </Button>
+              <Button
+                startIcon={<DeleteOutline />}
+                variant="outlined"
+                color="error"
+              >
+                Delete
+              </Button>
+            </CardActions>
+          </Card>
         ))}
       </Stack>
     </Container>

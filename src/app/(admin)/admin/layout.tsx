@@ -19,7 +19,8 @@ export default async function PrimaryLayout({
       <main
         style={{
           display: "flex",
-          flex: 1,
+          flexGrow: 1,
+          flexDirection: "column",
         }}
       >
         {children}

@@ -51,8 +51,6 @@ const AddCaseStudy = () => {
     );
   };
 
-  if (!session) return <LinearProgress color="secondary" />;
-
   return (
     <Container maxWidth="md" sx={{ mt: 8, textAlign: "center" }}>
       <Typography variant="h4">New Case Study</Typography>
