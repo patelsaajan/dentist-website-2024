@@ -8,7 +8,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dentist Website",
+  title: "Deesha Chudasama",
   description: "Personal Website for Deesha Chudasama",
   icons: [
     {
@@ -27,9 +27,6 @@ export default function RootLayout({
     <DentistThemeProvider>
       <NextAuthProvider>
         <html lang="en">
-          <head>
-            <link rel="icon" href="/favicon.ico" />
-          </head>
           <body className={inter.className} suppressHydrationWarning={true}>
             <SnackbarContext>{children}</SnackbarContext>
           </body>

@@ -7,7 +7,6 @@ export default async function PrimaryLayout({
 }) {
   return (
     <>
-      <AdminHomeButton />
       <main
         style={{
           display: "flex",

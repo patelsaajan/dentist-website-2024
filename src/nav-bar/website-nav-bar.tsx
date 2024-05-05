@@ -9,15 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { INavBarItems } from "types/nav";
 
-const navItems = [
-  { name: "Case Studies", route: "/case-studies" },
-  { name: "Portfolio", route: "/portfolio" },
-  { name: "About", route: "/about" },
-  { name: "Contact", route: "/contact" },
-];
-
-const WebsiteNav = () => {
+const WebsiteNav = ({ navBarItems }: INavBarItems) => {
   const theme = useTheme();
   return (
     <AppBar
@@ -53,7 +47,7 @@ const WebsiteNav = () => {
               spacing={6}
               sx={{ justifyContent: "flex-end" }}
             >
-              {navItems.map((navItem) => (
+              {navBarItems.map((navItem) => (
                 <Link href={navItem.route} key={navItem.name}>
                   <Typography
                     sx={{
