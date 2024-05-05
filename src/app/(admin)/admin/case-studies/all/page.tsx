@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { getCaseStudies } from "api/caseStudies";
+import AdminCaseStudyCard from "components/case-study/AdminCaseStudyCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ICaseStudyForm } from "types/caseStudiesForm";
@@ -48,33 +49,12 @@ const AllCaseStudies = () => {
           </Link>
         </Stack>
         {caseStudies.map((caseStudy) => (
-          <Card>
-            <CardContent>
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                sx={{ p: 2, alignItems: "center" }}
-              >
-                <Typography variant="h6">{caseStudy.title}</Typography>
-                <Typography variant="body1">
-                  {new Date(caseStudy.created || "").toDateString()}
-                </Typography>
-              </Stack>
-              <Typography variant="body2">{caseStudy.abstract}</Typography>
-            </CardContent>
-            <CardActions sx={{ justifyContent: "flex-end" }}>
-              <Button startIcon={<Edit />} variant="outlined">
-                Edit
-              </Button>
-              <Button
-                startIcon={<DeleteOutline />}
-                variant="outlined"
-                color="error"
-              >
-                Delete
-              </Button>
-            </CardActions>
-          </Card>
+          <AdminCaseStudyCard
+            key={caseStudy.title}
+            title={caseStudy.title}
+            abstract={caseStudy.abstract}
+            created={caseStudy.created}
+          />
         ))}
       </Stack>
     </Container>
