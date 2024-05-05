@@ -13,12 +13,14 @@ import {
 } from "@mui/material";
 import { getCaseStudies } from "api/caseStudies";
 import AdminCaseStudyCard from "components/case-study/AdminCaseStudyCard";
+import AdminConfrimDelete from "components/case-study/AdminConfrimDeleteModel";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const AllCaseStudies = () => {
   const [caseStudies, setCaseStudies] = useState<ICaseStudyForm[] | null>(null);
+  const [confirmDelete, setConfrimDelete] = useState(false);
   useEffect(() => {
     // add event listener on firestore collection
     const unsubscribe = getCaseStudies(setCaseStudies);
@@ -26,6 +28,10 @@ const AllCaseStudies = () => {
     // remove event listener on unmount
     return () => unsubscribe();
   }, []);
+
+  const handleOpenDeleteModel = () => {
+    setConfrimDelete(true);
+  };
 
   if (!caseStudies) return <LinearProgress />;
 
@@ -54,9 +60,16 @@ const AllCaseStudies = () => {
             title={caseStudy.title}
             abstract={caseStudy.abstract}
             created={caseStudy.created}
+            openDeleteModel={() => setConfrimDelete(true)}
           />
         ))}
       </Stack>
+      {confirmDelete && (
+        <AdminConfrimDelete
+          state={confirmDelete}
+          onClose={() => setConfrimDelete(false)}
+        />
+      )}
     </Container>
   );
 };

@@ -7,18 +7,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 type AdminCaseStudyCardProps = {
   title: string;
   created: number | undefined;
   abstract: string;
+  openDeleteModel: () => void;
 };
 
 const AdminCaseStudyCard = ({
   title,
   created,
   abstract,
+  openDeleteModel,
 }: AdminCaseStudyCardProps) => {
   const date = new Date(created || "").toDateString();
   return (
@@ -40,7 +41,12 @@ const AdminCaseStudyCard = ({
         <Button startIcon={<Edit />} variant="outlined">
           Edit
         </Button>
-        <Button startIcon={<DeleteOutline />} variant="outlined" color="error">
+        <Button
+          startIcon={<DeleteOutline />}
+          variant="outlined"
+          color="error"
+          onClick={openDeleteModel}
+        >
           Delete
         </Button>
       </CardActions>
