@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 // @ts-ignore
 import ImageResize from "quill-image-resize-module-react";
 import AddingCardImage from "./AddingCardImage";
+import { ICaseStudyForm } from "types/caseStudiesForm";
 
 Quill.register("modules/imageResize", ImageResize);
 

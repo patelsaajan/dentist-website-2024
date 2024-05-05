@@ -6,6 +6,7 @@ import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { createCaseStudy, fileStorage } from "lib/firebase/utils";
 import { useSnackbar } from "notistack";
+import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const AddOrEditCaseStudy = dynamic(
   () => import("components/case-study/addOrEditCaseStudy"),
