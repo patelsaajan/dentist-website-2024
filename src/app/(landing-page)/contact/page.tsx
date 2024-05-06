@@ -12,7 +12,7 @@ import { Butterfly_Kids } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const Contact = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
@@ -58,4 +58,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Contact;
