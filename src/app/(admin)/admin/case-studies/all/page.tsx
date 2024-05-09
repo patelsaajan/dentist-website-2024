@@ -1,26 +1,33 @@
 "use client";
-import { Add, AddBox, DeleteOutline, Edit } from "@mui/icons-material";
+import { AddBox } from "@mui/icons-material";
 import {
   Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
   Container,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import { getCaseStudies } from "api/caseStudies";
+import {
+  deleteCaseStudyDB,
+  deleteCaseStudyStorage,
+  getCaseStudies,
+} from "api/caseStudies";
 import AdminCaseStudyCard from "components/case-study/AdminCaseStudyCard";
 import AdminConfrimDelete from "components/case-study/AdminConfrimDeleteModel";
+import EditCaseStudyModal from "components/case-study/EditCaseStudyModal";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const AllCaseStudies = () => {
   const [caseStudies, setCaseStudies] = useState<ICaseStudyForm[] | null>(null);
-  const [confirmDelete, setConfrimDelete] = useState(false);
+  const [caseStudyToDelete, setCaseStudyToDelete] =
+    useState<ICaseStudyForm | null>(null);
+  const [caseStudyToEdit, setCaseStudyToEdit] = useState<ICaseStudyForm | null>(
+    null
+  );
+
   useEffect(() => {
     // add event listener on firestore collection
     const unsubscribe = getCaseStudies(setCaseStudies);
@@ -29,8 +36,22 @@ const AllCaseStudies = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleOpenDeleteModel = () => {
-    setConfrimDelete(true);
+  const handleDeleteCaseStudy = () => {
+    if (!caseStudyToDelete) return;
+
+    deleteCaseStudyStorage(
+      caseStudyToDelete?.cardPhoto as string,
+      caseStudyToDelete.slug
+    ).catch(() => enqueueSnackbar("Error deleting hero image"));
+
+    deleteCaseStudyDB(caseStudyToDelete.slug)
+      .then(() => {
+        enqueueSnackbar("Blog post deleted");
+      })
+      .catch(() => enqueueSnackbar("Error deleting blog"))
+      .finally(() => {
+        setCaseStudyToDelete(null);
+      });
   };
 
   if (!caseStudies) return <LinearProgress />;
@@ -57,21 +78,29 @@ const AllCaseStudies = () => {
         {caseStudies.map((caseStudy) => (
           <AdminCaseStudyCard
             key={caseStudy.title}
-            title={caseStudy.title}
-            abstract={caseStudy.abstract}
-            created={caseStudy.created}
-            openDeleteModel={() => setConfrimDelete(true)}
+            selectedCaseStudy={caseStudy}
+            selectCaseStudyToDelete={setCaseStudyToDelete}
+            selectCaseStudyToEdit={setCaseStudyToEdit}
           />
         ))}
       </Stack>
-      {confirmDelete && (
+      {caseStudyToDelete && (
         <AdminConfrimDelete
-          state={confirmDelete}
-          onClose={() => setConfrimDelete(false)}
+          state={!!caseStudyToDelete}
+          onClose={() => setCaseStudyToDelete(null)}
+          caseStudy={caseStudyToDelete}
+          handleDelete={handleDeleteCaseStudy}
+        />
+      )}
+      {caseStudyToEdit && (
+        <EditCaseStudyModal
+          state={!!caseStudyToEdit}
+          onClose={() => setCaseStudyToEdit(null)}
+          caseStudy={caseStudyToEdit}
+          // handleEdit={handleEditCaseStudy}
         />
       )}
     </Container>
   );
 };
-
 export default AllCaseStudies;

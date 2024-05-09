@@ -7,45 +7,55 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { ICaseStudyForm } from "types/caseStudiesForm";
 
 type AdminCaseStudyCardProps = {
-  title: string;
-  created: number | undefined;
-  abstract: string;
-  openDeleteModel: () => void;
+  selectedCaseStudy: ICaseStudyForm;
+  selectCaseStudyToDelete: (caseStudy: ICaseStudyForm | null) => void;
+  selectCaseStudyToEdit: (caseStudy: ICaseStudyForm | null) => void;
 };
 
 const AdminCaseStudyCard = ({
-  title,
-  created,
-  abstract,
-  openDeleteModel,
+  selectedCaseStudy,
+  selectCaseStudyToDelete,
+  selectCaseStudyToEdit,
 }: AdminCaseStudyCardProps) => {
-  const date = new Date(created || "").toDateString();
+  const date = new Date(selectedCaseStudy.created || "").toDateString();
   return (
     <Card>
       <CardContent>
         <Stack
           direction={"row"}
           justifyContent={"space-between"}
-          sx={{ py: 2, alignItems: "center" }}
+          sx={{
+            py: 2,
+            alignItems: "flex-start",
+            textAlign: "left",
+            width: " 100%",
+          }}
         >
-          <Typography variant="h6">{title}</Typography>
+          <Typography variant="h6" sx={{ width: "80%" }}>
+            {selectedCaseStudy.title}
+          </Typography>
           <Typography variant="body1">{date}</Typography>
         </Stack>
         <Typography variant="body2" textAlign={"justify"}>
-          {abstract}
+          {selectedCaseStudy.abstract}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "flex-end" }}>
-        <Button startIcon={<Edit />} variant="outlined">
+        <Button
+          startIcon={<Edit />}
+          variant="outlined"
+          onClick={() => selectCaseStudyToEdit(selectedCaseStudy)}
+        >
           Edit
         </Button>
         <Button
           startIcon={<DeleteOutline />}
           variant="outlined"
           color="error"
-          onClick={openDeleteModel}
+          onClick={() => selectCaseStudyToDelete(selectedCaseStudy)}
         >
           Delete
         </Button>

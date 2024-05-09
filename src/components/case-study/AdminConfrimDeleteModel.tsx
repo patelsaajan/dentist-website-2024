@@ -1,6 +1,7 @@
 import { Cancel, DeleteOutline, Edit } from "@mui/icons-material";
 import { Box, Modal, Typography, Button, Stack } from "@mui/material";
 import React from "react";
+import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const style = {
   position: "absolute" as "absolute",
@@ -16,15 +17,17 @@ const style = {
 
 type AdminConfrimDeleteModelProps = {
   state: boolean;
+  caseStudy: ICaseStudyForm;
   onClose: () => void;
-  // title: string;
+  handleDelete: () => void;
 };
 
 const AdminConfrimDeleteModel = ({
   state,
   onClose,
-}: // title,
-AdminConfrimDeleteModelProps) => {
+  handleDelete,
+  caseStudy,
+}: AdminConfrimDeleteModelProps) => {
   return (
     <Modal
       open={state}
@@ -34,12 +37,13 @@ AdminConfrimDeleteModelProps) => {
     >
       <Box sx={style}>
         <Typography variant="h5">Are you sure you want to delete:</Typography>
-        <Typography variant="h6">title</Typography>
+        <Typography variant="h6">{caseStudy.title}</Typography>
         <Stack direction={"row"} justifyContent={"space-evenly"}>
           <Button
             startIcon={<Cancel />}
             variant="outlined"
             sx={{ alignItems: "center" }}
+            onClick={onClose}
           >
             Cancel
           </Button>
@@ -47,6 +51,7 @@ AdminConfrimDeleteModelProps) => {
             startIcon={<DeleteOutline />}
             variant="outlined"
             color="error"
+            onClick={handleDelete}
           >
             Delete
           </Button>

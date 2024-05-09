@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { createCaseStudy, fileStorage } from "lib/firebase/utils";
 import { useSnackbar } from "notistack";
 import { ICaseStudyForm } from "types/caseStudiesForm";
+import { useRouter } from "next/navigation";
 
 const AddOrEditCaseStudy = dynamic(
   () => import("components/case-study/addOrEditCaseStudy"),
@@ -25,6 +26,7 @@ const sanitiseSlug = (text: string) =>
 const AddCaseStudy = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const onSubmit = (data: ICaseStudyForm): void => {
     if (!session?.user?.name || !data.cardPhoto) {
@@ -42,7 +44,10 @@ const AddCaseStudy = () => {
         cardPhoto: cardPhoto,
         slug,
       })
-        .then(() => enqueueSnackbar(" case study has been added"))
+        .then(() => {
+          enqueueSnackbar(" case study has been added"),
+            router.push("/admin/case-studies/all");
+        })
         .catch((e) =>
           enqueueSnackbar(`Error adding the case study: ${e.message}`, {
             variant: "error",
