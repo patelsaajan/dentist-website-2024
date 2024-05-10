@@ -1,43 +1,65 @@
 "use client";
-import {
-  Container,
-  LinearProgress,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Container, LinearProgress, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
+
+import _ from "lodash";
 import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { createCaseStudy, fileStorage } from "lib/firebase/utils";
+import { useSnackbar } from "notistack";
+import { ICaseStudyForm } from "types/caseStudiesForm";
+import { useRouter } from "next/navigation";
+
+const AddOrEditCaseStudy = dynamic(
+  () => import("components/case-study/addOrEditCaseStudy"),
+  { ssr: false, loading: () => <LinearProgress /> }
+);
+
+const removeEmojis = (text: string) =>
+  text.replace(
+    /[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|/g,
+    ""
+  );
+
+const sanitiseSlug = (text: string) =>
+  removeEmojis(text).replace(/[^\w\s]/gi, "");
 
 const AddCaseStudy = () => {
   const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
-  const dv2 = {
-    title: "",
-    summary: "",
-    tag: "",
-    content: "",
-    heroPhoto: null,
+  const onSubmit = (data: ICaseStudyForm): void => {
+    if (!session?.user?.name || !data.cardPhoto) {
+      enqueueSnackbar("Invalid data, please try again.", { variant: "error" });
+      return;
+    }
+
+    const { cardPhoto, title, ...payload } = data;
+
+    const slug = _.kebabCase(sanitiseSlug(title));
+    fileStorage(cardPhoto as File, `caseStudies/${slug}`).then((cardPhoto) =>
+      createCaseStudy(slug, {
+        ...payload,
+        title,
+        cardPhoto: cardPhoto,
+        slug,
+      })
+        .then(() => {
+          enqueueSnackbar(" case study has been added"),
+            router.push("/admin/case-studies/all");
+        })
+        .catch((e) =>
+          enqueueSnackbar(`Error adding the case study: ${e.message}`, {
+            variant: "error",
+          })
+        )
+    );
   };
 
-  const { control, handleSubmit, reset, setValue, watch, getValues } =
-    useForm<caseStudyForm>({
-      defaultValues: dv2,
-    });
-
-  if (!session) {
-    return <LinearProgress color="secondary" />;
-  }
-
   return (
-    <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
+    <Container maxWidth="md" sx={{ mt: 8, textAlign: "center" }}>
       <Typography variant="h4">New Case Study</Typography>
-      <Stack spacing={3} sx={{ mt: 4 }}>
-        <TextField label={"Title"} size="small" />
-        <TextField label={"Abstract"} size="small" />
-        <TextField type="file" size="small" />
-        <TextField label={"React Quill"} size="small" multiline minRows={5} />
-      </Stack>
+      <AddOrEditCaseStudy onSubmitCaseStudy={onSubmit} />
     </Container>
   );
 };

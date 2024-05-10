@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 const AdminHome = () => {
   const { data: session } = useSession();
   const theme = useTheme();
-  console.log(process.env.NEXT_PUBLIC_ADMIN_EMAIL);
 
   if (!session || !session.user?.email) {
     redirect("/");
@@ -26,83 +25,6 @@ const AdminHome = () => {
         >
           <Typography variant="h3">Welcome</Typography>
           <Typography variant="h5">{user}</Typography>
-
-          <Typography variant="h5">Case Study</Typography>
-          <Stack direction={"row"} spacing={3}>
-            <Link href={"/admin/case-studies/add"}>
-              <Button
-                variant="contained"
-                sx={{
-                  px: 3,
-                  width: 100,
-                  transition: "all 200ms ease-in",
-                  border: `2px solid ${theme.palette.primary.main}`,
-                  "&:hover": {
-                    backgroundColor: `${theme.palette.primary.light}`,
-                    color: "black",
-                  },
-                }}
-              >
-                All
-              </Button>
-            </Link>
-            <Link href={"/admin/case-studies/add"}>
-              <Button
-                // variant="contained"
-                sx={{
-                  color: "black",
-                  border: "2px solid black",
-                  px: 3,
-                  width: 100,
-                  transition: "all 200ms ease-in",
-                  "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
-                  },
-                }}
-              >
-                Add
-              </Button>
-            </Link>
-          </Stack>
-          <Typography variant="h5">Portfolio</Typography>
-          <Stack direction={"row"} spacing={3}>
-            <Link href={"/admin/portfolio/add"}>
-              <Button
-                variant="contained"
-                sx={{
-                  px: 3,
-                  width: 100,
-                  transition: "all 200ms ease-in",
-                  border: `2px solid ${theme.palette.primary.main}`,
-                  "&:hover": {
-                    backgroundColor: `${theme.palette.primary.light}`,
-                    color: "black",
-                  },
-                }}
-              >
-                All
-              </Button>
-            </Link>
-            <Link href={"/admin/portfolio/add"}>
-              <Button
-                sx={{
-                  color: "black",
-                  border: "2px solid black",
-                  px: 3,
-                  width: 100,
-                  transition: "all 200ms ease-in",
-                  "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
-                  },
-                }}
-              >
-                Add
-              </Button>
-            </Link>
-          </Stack>
-          <SignOut />
         </Stack>
       </Container>
     );

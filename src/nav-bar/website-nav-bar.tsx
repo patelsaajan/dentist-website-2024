@@ -9,27 +9,21 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { INavBarItems } from "types/nav";
 
-const navItems = [
-  { name: "Case Studies", route: "/case-studies" },
-  { name: "Portfolio", route: "/portfolio" },
-  { name: "About", route: "/about" },
-  { name: "Contact", route: "/contact" },
-];
-
-const WebsiteNav = () => {
+const WebsiteNav = ({ navBarItems }: INavBarItems) => {
   const theme = useTheme();
   return (
-    <Container maxWidth={"lg"} disableGutters sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          backgroundColor: "transparent",
-          width: "100%",
-        }}
-      >
-        <Toolbar disableGutters>
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        backgroundColor: "transparent",
+        width: "100%",
+      }}
+    >
+      <Toolbar disableGutters>
+        <Container maxWidth={"lg"} disableGutters sx={{ flexGrow: 1 }}>
           <Stack
             direction={"row"}
             width={"100%"}
@@ -53,7 +47,7 @@ const WebsiteNav = () => {
               spacing={6}
               sx={{ justifyContent: "flex-end" }}
             >
-              {navItems.map((navItem) => (
+              {navBarItems.map((navItem) => (
                 <Link href={navItem.route} key={navItem.name}>
                   <Typography
                     sx={{
@@ -70,9 +64,9 @@ const WebsiteNav = () => {
               ))}
             </Stack>
           </Stack>
-        </Toolbar>
-      </AppBar>
-    </Container>
+        </Container>
+      </Toolbar>
+    </AppBar>
   );
 };
 

@@ -7,6 +7,7 @@ const SignOut = () => {
   const theme = useTheme();
   return (
     <Button
+      variant="contained"
       sx={{ border: `1px solid ${theme.palette.primary.main}` }}
       onClick={() => signOut()}
     >
