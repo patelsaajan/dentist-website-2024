@@ -6,17 +6,33 @@ import {
   CardContent,
   CardMedia,
   Container,
+  LinearProgress,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { getCaseStudies } from "api/caseStudies";
+import CardCaseStudy from "components/case-study/CardCaseStudy";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ICaseStudyForm } from "types/caseStudiesForm";
 
 const page = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [caseStudies, setCaseStudies] = useState<ICaseStudyForm[]>([]);
+
+  useEffect(() => {
+    // add event listener on firestore collection
+    const unsubscribe = getCaseStudies(setCaseStudies);
+
+    // remove event listener on unmount
+    return () => unsubscribe();
+  }, []);
+
+  if (!caseStudies) return <LinearProgress />;
+
   return (
     <Container maxWidth="lg" disableGutters>
       <Stack
@@ -31,92 +47,9 @@ const page = () => {
           Case Studies
         </Typography>
         <Stack direction={"column"} spacing={6}>
-          <Card elevation={0} sx={{ height: "400px" }}>
-            <Stack direction={"row"} sx={{ height: "100%" }}>
-              <CardContent
-                sx={{
-                  width: "50%",
-                  textAlign: "left",
-                  pl: 5,
-                  height: "100%",
-                }}
-              >
-                <Stack
-                  direction={"column"}
-                  spacing={2}
-                  sx={{
-                    height: "100%",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    variant={isMobile ? "h5" : "h4"}
-                    sx={{ fontFamily: "Noto_Serif ", fontWeight: 500 }}
-                  >
-                    Hello world
-                  </Typography>
-                  <Typography>
-                    I created this personal project in order to show how to
-                    create an interface in Figma using a portfolio as an
-                    example.
-                  </Typography>
-                  <Link href={"/case-studies"}>
-                    <Button variant="outlined" color="secondary">
-                      View
-                    </Button>
-                  </Link>
-                </Stack>
-              </CardContent>
-              <CardMedia
-                sx={{ height: "100%", width: "50%" }}
-                image="/imgs/hero.png"
-                title="Dishwasher"
-              />
-            </Stack>
-          </Card>
-          <Card elevation={0} sx={{ height: "400px" }}>
-            <Stack direction={"row-reverse"} sx={{ height: "100%" }}>
-              <CardContent
-                sx={{
-                  width: "50%",
-                  textAlign: "left",
-                  pl: 5,
-                  height: "100%",
-                }}
-              >
-                <Stack
-                  direction={"column"}
-                  spacing={2}
-                  sx={{
-                    height: "100%",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    variant={isMobile ? "h5" : "h4"}
-                    sx={{ fontFamily: "Noto_Serif ", fontWeight: 500 }}
-                  >
-                    Hello world
-                  </Typography>
-                  <Typography>
-                    I created this personal project in order to show how to
-                    create an interface in Figma using a portfolio as an
-                    example.
-                  </Typography>
-                  <Link href={"/case-studies"}>
-                    <Button variant="outlined" color="secondary">
-                      View
-                    </Button>
-                  </Link>
-                </Stack>
-              </CardContent>
-              <CardMedia
-                sx={{ height: "100%", width: "50%" }}
-                image="/imgs/hero.png"
-                title="Dishwasher"
-              />
-            </Stack>
-          </Card>
+          {caseStudies.map((cs, i) => (
+            <CardCaseStudy key={cs.title} caseStudy={cs} oriNum={i} />
+          ))}
         </Stack>
       </Stack>
     </Container>
