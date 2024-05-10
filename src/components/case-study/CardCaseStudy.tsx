@@ -44,6 +44,8 @@ const CardCaseStudy = ({ caseStudy, oriNum }: CardCaseStudyProps) => {
 
   const rowDirection = oriNum % 2 !== 0 ? "row" : "row-reverse";
 
+  const date = new Date(caseStudy.created || Date.now()).toDateString();
+
   return (
     <Card elevation={0} sx={{ height: "400px" }}>
       <Stack direction={rowDirection} sx={{ height: "100%" }}>
@@ -70,11 +72,14 @@ const CardCaseStudy = ({ caseStudy, oriNum }: CardCaseStudyProps) => {
               {caseStudy.title}
             </Typography>
             <Typography>{caseStudy.abstract}</Typography>
-            <Link href={`/case-studies/${caseStudy.slug}`}>
-              <Button variant="outlined" color="secondary">
-                View
-              </Button>
-            </Link>
+            <Stack direction={"row"} spacing={3} sx={{ alignItems: "center" }}>
+              <Link href={`/case-studies/${caseStudy.slug}`}>
+                <Button variant="outlined" color="secondary">
+                  View
+                </Button>
+              </Link>
+              <Typography>{date}</Typography>
+            </Stack>
           </Stack>
         </CardContent>
         {imageUrl ? (
