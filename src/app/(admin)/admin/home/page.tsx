@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 const AdminHome = () => {
   const { data: session } = useSession();
   const theme = useTheme();
-  console.log(process.env.NEXT_PUBLIC_ADMIN_EMAIL);
 
   if (!session || !session.user?.email) {
     redirect("/");
