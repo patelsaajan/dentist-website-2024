@@ -4,8 +4,9 @@ import {
   doc,
   onSnapshot,
   query,
+  setDoc,
 } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
+import { deleteObject, getBytes, ref } from "firebase/storage";
 import { db, storage } from "lib/firebase/config";
 import { ICaseStudyForm } from "types/caseStudiesForm";
 
@@ -30,4 +31,23 @@ export function deleteCaseStudyStorage(fileName: string, folderName: string) {
 export function deleteCaseStudyDB(docName: string) {
   const dbRef = doc(db, "case-studies", docName);
   return deleteDoc(dbRef);
+}
+
+export const getCardPhotoFile = async (
+  slug: string,
+  imageId: string
+): Promise<File | null> => {
+  const photoRef = ref(storage, `caseStudies/${slug}/${imageId}`);
+  const fileBytes = await getBytes(photoRef);
+  if (!fileBytes) {
+    return null;
+  } else {
+    const cardPhotoFile = new File([fileBytes], imageId);
+    return cardPhotoFile;
+  }
+};
+
+export function updateCaseStudy(slug: string, data: ICaseStudyForm) {
+  const ref = doc(db, "case-studies", slug);
+  return setDoc(ref, data, { merge: true });
 }
